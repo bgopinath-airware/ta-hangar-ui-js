@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Hangar Manager</title>
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+		<!-- Latest compiled JavaScript -->
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+
+	<form role="form" method="post" action="/hangar/<%=hangar._id%>/edit?_method=put">
+		<div class="container well">
+			<div class="form-group">
+				<label> Name </label>
+				<input type="text" name="name" class="form-control" value="<%= hangar.name %>"/>
+			</div>
+			<div class="form-group">
+				<label> Description </label>
+				<input type="text" name="description" class="form-control" value="<%= hangar.description %>"/>
+			</div>
+			<div class="form-group">
+				<label> Location </label>
+				<input type="text" name="location" class="form-control" value="<%= hangar.location %>"/>
+			</div>
+			<div class="form-group">
+				<label> Size </label>
+				<input type="text" name="size" class="form-control" value="<%= hangar.size %>"/>
+			</div>
+			<div class="form-group">
+				<label> Capacity </label>
+				<input type="text" name="capacity" class="form-control" value="<%= hangar.capacity %>"/>
+			</div>
+			<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+		</div>
+	</form>
+	</body>
+</html>

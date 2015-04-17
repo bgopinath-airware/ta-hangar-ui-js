@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Hangar Manager</title>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+		<!-- Latest compiled JavaScript -->
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+		<!-- <link rel="stylesheet" href="css/style.css" -->
+	</head>
+	<body>
+		<div class="container">
+			<a href="/hangar/new" class="btn btn-primary col-sm-2" role="button">New Hangar</a>
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th class="col-sm-1"> ID </th>
+						<th class="col-sm-2"> Name </th>
+						<th class="col-sm-2"> Description </th>
+						<th class="col-sm-3"> Location </th>
+						<th class="col-sm-2"> Size </th>
+						<th class="col-sm-2"> Capacity </th>
+						<th class="col-sm-2"> Aircraft </th>
+						<th class="col-sm-1"></th>
+						<th class="col-sm-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<% hangars.forEach(function(hangar) { %>
+						<tr>
+							<td> <%= hangar._id %> </td>
+							<td> <%= hangar.name %> </td>
+							<td> <%= hangar.description %> </td>
+							<td> <%= hangar.location %> </td>
+							<td> <%= hangar.size %> </td>
+							<td> <%= hangar.capacity %> </td>
+							<td> <%= hangar.aircraft.length %> </td>
+							<td> 
+								
+								<button type="button" class="btn btn-default"><a href="/hangar/<%= hangar._id %>/edit">Edit</a></button>
+							</td>
+							<td>
+								<form class="form-inline" role="form" method="post" action="/hangar/<%=hangar._id%>?_method=delete"><button type="submit" class="btn btn-danger">Delete</button></form>
+								
+							</td>
+						</tr>
+					<% }); %>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
