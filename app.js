@@ -13,6 +13,7 @@ app.use(methodOverride("_method"));
 app.use(bodyParser.urlencoded({
     extended:true
 }));
+app.use(express.static("public"));
 
 // READ
 app.get('/', function (req, res) {
