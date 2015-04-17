@@ -5,7 +5,7 @@ var express = require("express"),
 
 var app = express();
 //var defaultRestUri = "http://localhost:3000/api";
-//var defaultRestUri = "https://guarded-fortress-9150.herokuapp.com/api";
+var defaultRestUri = "https://guarded-fortress-9150.herokuapp.com/api";
 var restUri = process.env.REST_URI || defaultRestUri;
 
 app.set("view engine", "ejs");
@@ -80,4 +80,4 @@ app.delete("/hangar/:id", function(req, res) {
 	});
 });
 
-app.listen(3001);
+app.listen(process.env.PORT || 3001);
