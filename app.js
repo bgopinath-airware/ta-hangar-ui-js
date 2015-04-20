@@ -4,8 +4,8 @@ var express = require("express"),
 	request = require("request");
 
 var app = express();
-//var defaultRestUri = "http://localhost:3000/api";
-var defaultRestUri = "https://guarded-fortress-9150.herokuapp.com/api";
+var defaultRestUri = "http://localhost:3000/api";
+//var defaultRestUri = "https://guarded-fortress-9150.herokuapp.com/api";
 var restUri = process.env.REST_URI || defaultRestUri;
 
 app.set("view engine", "ejs");
@@ -19,8 +19,17 @@ app.use(express.static("public"));
 app.get('/', function (req, res) {
 	request(restUri, function(error, response, body) {
 		var hangars = JSON.parse(body);
+		var sorted_hangars = hangars.sort(function (a, b) {
+			if (a.name < b.name) {
+				return -1;
+			}
+			if (a.name > b.name) {
+				return 1;
+			}
+			return 0;
+		});
 		res.render("index", {
-			hangars: hangars,
+			hangars: sorted_hangars,
 		});
 	});
 });
@@ -41,6 +50,32 @@ app.post('/hangar/new', function (req, res) {
 			capacity: req.body.capacity
 		}
 	}, function(error, response, body) {
+		res.redirect("/");
+	});
+});
+
+app.get('/aircraft/new', function (req, res) {
+	res.render("new_aircraft");
+});
+
+app.post('/aircraft/new', function (req, res) {
+	request({
+		method: "POST",
+		uri: restUri+"/aircraft",
+		form: {
+			name: req.body.name,
+			description: req.body.description,
+			type: req.body.type,
+			tail: req.body.tail,
+			owner: req.body.owner,
+			hangar: req.body.hangar
+		}
+	}, function (error, response, body) {
+		if (error) {
+			console.log(error);
+		}
+		res.header('Cache-Control', 
+				   'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
 		res.redirect("/");
 	});
 });
@@ -70,12 +105,45 @@ app.put('/hangar/:id/edit', function (req, res) {
 		res.redirect("/");
 	});
 });
-
+app.get('/aircraft/:id/edit', function (req, res) {
+	request(restUri+"/aircraft/"+req.params.id, 
+			 function(err, response, body) {
+			 	res.render("edit_aircraft", {
+			 		aircraft: JSON.parse(body)
+			 	});
+			 }
+	);
+});
+app.put('/aircraft/:id/edit', function (req, res) {
+	request({
+		method: "PUT",
+		uri: restUri+"/aircraft/"+req.params.id,
+		form: {
+			name: req.body.name,
+			description: req.body.description,
+			type: req.body.type,
+			tail: req.body.tail,
+			owner: req.body.owner,
+			hangar: req.body.hangar
+		}
+	}, function (error, response, body) {
+		res.redirect("/");
+	});
+});
 // DELETE
 app.delete("/hangar/:id", function(req, res) {
 	request({
 		method: "DELETE",
 		uri: restUri+"/hangar/"+req.params.id
+	}, function(error, response, body) {
+		res.redirect("/");
+	});
+});
+// DELETE
+app.delete("/aircraft/:id", function(req, res) {
+	request({
+		method: "DELETE",
+		uri: restUri+"/aircraft/"+req.params.id
 	}, function(error, response, body) {
 		res.redirect("/");
 	});

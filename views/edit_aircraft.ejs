@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Hangar Manager</title>
+		<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+		<!-- Latest compiled JavaScript -->
+		<script src="/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+	<div class="container well">
+		<form id="editForm" role="form" method="post" action="/aircraft/<%=aircraft._id%>/edit?_method=put">
+			
+				<div class="form-group">
+					<label> Name </label>
+					<input type="text" name="name" class="form-control" value="<%= aircraft.name %>"/>
+				</div>
+				<div class="form-group">
+					<label> Description </label>
+					<input type="text" name="description" class="form-control" value="<%= aircraft.description %>"/>
+				</div>
+				<div class="form-group">
+					<label> Type </label>
+					<input type="text" name="type" class="form-control" value="<%= aircraft.type %>"/>
+				</div>
+				<div class="form-group">
+					<label> Tail Number </label>
+					<input type="text" name="tail" class="form-control" value="<%= aircraft.tail %>"/>
+				</div>
+				<div class="form-group">
+					<label> Owner </label>
+					<input type="text" name="owner" class="form-control" value="<%= aircraft.owner %>"/>
+				</div>
+				<div class="form-group">
+					<label> Hangar ID </label>
+					<input type="text" name="hangar" class="form-control" value="<%= aircraft.hangar %>"/>
+				</div>
+		</form>
+		<form id="deleteForm" class="form-inline" role="form" method="post" action="/aircraft/<%=aircraft._id%>?_method=delete"></form>
+		<div class="btn-group">
+			<a href="/" class="btn btn-default btn-lg" role="button">Back</a>
+			<button type="submit" class="btn btn-primary btn-lg" form="editForm">Save</button>
+			<button type="submit" class="btn btn-danger btn-lg" form="deleteForm">Delete</button>
+		</div>
+	</div>
+	</body>
+</html>
